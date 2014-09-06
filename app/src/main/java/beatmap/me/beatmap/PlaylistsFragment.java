@@ -29,8 +29,7 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String USER_ID = "user_id";
-
-    private String mParam1;
+    private String user_ID;
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,11 +45,9 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static PlaylistsFragment newInstance(String param1, String param2) {
+    public static PlaylistsFragment newInstance(String userId) {
         PlaylistsFragment fragment = new PlaylistsFragment();
-        Bundle args = new Bundle();
-        args.putString(USER_ID, param1);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -59,19 +56,21 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
      * fragment (e.g. upon screen orientation changes).
      */
     public PlaylistsFragment() {
+        /*
+        RequestSender requester = new RequestSender(getActivity());
+
+        requester.getPlaylists();
+        */
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(USER_ID);
-        }
-
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+
     }
 
     /**
@@ -94,31 +93,6 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
 
         return view;
     }
-
-    /*
-    public void requestPlaylists(String url)
-    {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        mTextView.setText("Response is: "+ response.substring(0,500));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mTextView.setText("That didn't work!");
-            }
-        });
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-    }
-    */
 
     @Override
     public void onAttach(Activity activity) {

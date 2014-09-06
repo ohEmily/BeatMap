@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -19,14 +18,13 @@ public class LoginActivity extends Activity implements
 
     private static final String CLIENT_ID = "49e382646ec34dcc931db6db5ceb1f6d";
     private static final String REDIRECT_URI = "beatmap-live://callback";
-    // final TextView mTextView = (TextView) findViewById(R.id.text);
-
     private Player mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
                 new String[]{"user-read-private", "streaming", "playlist-read-private"}, null,
                 this);
@@ -39,12 +37,14 @@ public class LoginActivity extends Activity implements
         if (uri != null) {
             AuthenticationResponse response = SpotifyAuthentication.parseOauthResponse(uri);
             Spotify spotify = new Spotify(response.getAccessToken());
-            mPlayer = spotify.getPlayer(this, "My Company Name", this, new Player.InitializationObserver() {
+            mPlayer = spotify.getPlayer(this, "BeatMap", this, new Player.InitializationObserver()
+            {
                 @Override
                 public void onInitialized() {
                     mPlayer.addConnectionStateCallback(LoginActivity.this);
                     mPlayer.addPlayerNotificationCallback(LoginActivity.this);
-                    mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
+
+
                 }
 
                 @Override
